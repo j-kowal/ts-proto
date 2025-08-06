@@ -73,6 +73,7 @@ export type Options = {
   outputTypeAnnotations: boolean | "static-only" | "optional";
   outputTypeRegistry: boolean;
   stringEnums: boolean;
+  stringEnumsLowerCase: boolean;
   constEnums: boolean;
   removeEnumPrefix: boolean;
   enumsAsLiterals: boolean;
@@ -147,6 +148,7 @@ export function defaultOptions(): Options {
     outputTypeAnnotations: false,
     outputTypeRegistry: false,
     stringEnums: false,
+    stringEnumsLowerCase: false,
     constEnums: false,
     removeEnumPrefix: false,
     enumsAsLiterals: false,

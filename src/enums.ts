@@ -7,6 +7,10 @@ import { Context } from "./context";
 
 type UnrecognizedEnum = { present: false } | { present: true; name: string; originalName: string };
 
+function getEnumStringValue(ctx: Context, value: string): string {
+  return ctx.options.stringEnumsLowerCase ? value.toLowerCase() : value;
+}
+
 // Output the `enum { Foo, A = 0, B = 1 }`
 export function generateEnum(
   ctx: Context,
@@ -37,14 +41,14 @@ export function generateEnum(
     }
     maybeAddComment(options, info, chunks, valueDesc.options?.deprecated, `${memberName} - `);
     chunks.push(
-      code`${memberName} ${delimiter} ${options.stringEnums ? `"${valueName}"` : valueDesc.number.toString()},`,
+      code`${memberName} ${delimiter} ${options.stringEnums ? `"${getEnumStringValue(ctx, valueName)}"` : valueDesc.number.toString()},`,
     );
   });
 
   if (options.unrecognizedEnum && !unrecognizedEnum.present) {
     chunks.push(code`
       ${options.unrecognizedEnumName} ${delimiter} ${
-        options.stringEnums ? `"${options.unrecognizedEnumName}"` : options.unrecognizedEnumValue.toString()
+        options.stringEnums ? `"${getEnumStringValue(ctx, options.unrecognizedEnumName)}"` : options.unrecognizedEnumValue.toString()
       },`);
   }
 
